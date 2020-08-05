@@ -1,30 +1,74 @@
-{{Runtime Raketask Specification}}
-Proposal
-Allow app users to specify a raketask from the rakefile at runtime.
+# Rake Task Execution
 
-Motivation
-Specifying an argument to `bundle exec rake` is a common use-case. Allowing the task to be
-specified at run time makes the container image more flexible/broadly useable because it enables
-the non-default use-case.
+## Proposal
 
-Implementation (Optional)
-The user can specify the rake task as an arguement to the launcher at runtime.
-We believe [this rfc](https://github.com/buildpacks/rfcs/blob/main/text/0045-launcher-arguments.md) will enable this behavior.
+Enable application developers to build images that execute `rake` tasks from a
+`Rakefile` at runtime.
 
-For example, if the user builds a `rake` buildpack with a Rakefile that has the tasks `task1` and `task2`,
-they can run task1 with:
+## Motivation
 
-```bash
-$ docker run image-name task1
+[`rake`](https://ruby.github.io/rake/) is a very common script/task execution
+framework. Ruby developers will commonly write `rake` tasks to run tests,
+execute database migrations, or build release artifacts.
+
+Developers can declare named tasks in a `Rakefile` which can be executed by
+running `rake <task>`.  Additionally, `rake` supports the concept of a
+"default" task that will be run when simply executing `rake` by itself.
+
+The buildpack should support both of these forms of execution, opting to
+support the "default" task as the primary launch process.
+
+## Implementation
+
+Supporting the "default" case can be achieved by setting the launch process to
+`rake`. Therefore, when a developer executes their built image, the "default"
+task will be executed.
+
+Supporting the "specific" case, where an app developer wishes to execute a task
+that is not the default, the buildpack can leverage the [recent
+change](https://github.com/buildpacks/rfcs/blob/main/text/0045-launcher-arguments.md)
+in behavior of the launcher to support additional, user-provided arguments.
+
+For example, a user may build an application that contains the following `Rakefile`:
+
+```ruby
+task default: %w[greet]
+
+desc "Prints a greeting"
+task :greet, [:name] do |t, args|
+  args.with_defaults(:name => "World")
+  puts "Hello, #{args.name}!"
+end
 ```
 
-task2 with
-```bash
-$ docker run image-name task2
+In this case, the built container image will have a launch command of `rake`
+which will enable some useful workflows for the given image.
+
+For example, the user can execute the "default" task:
+
+```
+$ docker run -it <image>
+Hello, World!
 ```
 
-and simply running
-```bash
-$ docker run image-name
+Or list the tasks available in the `Rakefile`:
+
 ```
-will run whatever is defined as the default task.
+$ docker run -it <image> --tasks
+rake greet[name]  # Prints a greeting
+```
+
+Or execute a task by name:
+
+```
+$ docker run -it <image> greet[Alice]
+Hello, Alice!
+```
+
+### Bundler Support
+
+It is common for Ruby developers to use `bundler` for their applications, and
+we should ensure that the `rake` task executes with the gems specified in the
+`Gemfile`. Given this concern, the buildpack should modify the launch command
+to `bundle exec rake` if the source code contains a `Gemfile` and the `Gemfile`
+references `rake`.
