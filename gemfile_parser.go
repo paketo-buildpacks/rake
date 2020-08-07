@@ -27,20 +27,14 @@ func (p GemfileParser) Parse(path string) (bool, error) {
 	quotes := `["']`
 	rakeRe := regexp.MustCompile(fmt.Sprintf(`^gem %srake%s`, quotes, quotes))
 
-	hasRake := false
 	scanner := bufio.NewScanner(file)
 
 	for scanner.Scan() {
 		line := []byte(scanner.Text())
 
-		if !hasRake {
-			hasRake = rakeRe.Match(line)
-		}
-
-		if hasRake {
+		if rakeRe.Match(line) {
 			return true, nil
 		}
 	}
-
 	return false, nil
 }

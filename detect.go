@@ -64,8 +64,6 @@ func Detect(gemfileParser Parser) packit.DetectFunc {
 				})
 		}
 
-		fmt.Println("REQUIREMENTS: ", requirements)
-
 		return packit.DetectResult{
 			Plan: packit.BuildPlan{
 				Provides: []packit.BuildPlanProvision{},

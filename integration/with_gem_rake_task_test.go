@@ -79,8 +79,8 @@ func testWithGemRakeTask(t *testing.T, context spec.G, it spec.S) {
 
 			Expect(logs).To(ContainLines(
 				"Rake Buildpack 1.2.3",
-				"  Writing rake command",
-				"    bundle exec rake",
+				"  Assigning launch processes",
+				"    web: bundle exec rake",
 			))
 
 		})

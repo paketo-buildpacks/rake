@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"path/filepath"
 
-	"github.com/cloudfoundry/packit/scribe"
 	"github.com/paketo-buildpacks/packit"
+	"github.com/paketo-buildpacks/packit/scribe"
 )
 
 //go:generate faux --interface Parser --output fakes/parser.go
@@ -22,15 +22,14 @@ func Build(gemfileParser Parser, logger scribe.Logger) packit.BuildFunc {
 			return packit.BuildResult{}, fmt.Errorf("failed to parse Gemfile: %w", err)
 		}
 
-		var command string
+		command := "rake"
+
 		if hasRakeGem {
 			command = "bundle exec rake"
-		} else {
-			command = "rake"
 		}
 
-		logger.Process("Writing rake command")
-		logger.Subprocess(command)
+		logger.Process("Assigning launch processes")
+		logger.Subprocess("web: %s", command)
 
 		return packit.BuildResult{
 			Processes: []packit.Process{

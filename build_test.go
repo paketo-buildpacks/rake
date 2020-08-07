@@ -7,8 +7,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/cloudfoundry/packit/scribe"
 	"github.com/paketo-buildpacks/packit"
+	"github.com/paketo-buildpacks/packit/scribe"
 	"github.com/paketo-community/rake"
 	"github.com/paketo-community/rake/fakes"
 	"github.com/sclevine/spec"
@@ -83,7 +83,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			}))
 
 			Expect(buffer.String()).To(ContainSubstring("Some Buildpack some-version"))
-			Expect(buffer.String()).To(ContainSubstring("Writing rake command"))
+			Expect(buffer.String()).To(ContainSubstring("Assigning launch processes"))
 			Expect(buffer.String()).To(ContainSubstring("bundle exec rake"))
 		})
 	})
@@ -120,7 +120,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 			}))
 
 			Expect(buffer.String()).To(ContainSubstring("Some Buildpack some-version"))
-			Expect(buffer.String()).To(ContainSubstring("Writing rake command"))
+			Expect(buffer.String()).To(ContainSubstring("Assigning launch processes"))
 			Expect(buffer.String()).To(ContainSubstring("rake"))
 		})
 	})
