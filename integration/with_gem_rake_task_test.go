@@ -78,7 +78,7 @@ func testWithGemRakeTask(t *testing.T, context spec.G, it spec.S) {
 			Eventually(rLogs).Should(ContainSubstring("I am a rake task"))
 
 			Expect(logs).To(ContainLines(
-				"Rake Buildpack 1.2.3",
+				"Paketo Rake Buildpack 1.2.3",
 				"  Assigning launch processes",
 				"    web: bundle exec rake",
 			))
