@@ -76,7 +76,7 @@ func testWithoutGemRakeTask(t *testing.T, context spec.G, it spec.S) {
 			Eventually(rLogs).Should(ContainSubstring("I am a rake task"))
 
 			Expect(logs).To(ContainLines(
-				"Paketo Rake Buildpack 1.2.3",
+				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, settings.Buildpack.Name)),
 				"  Assigning launch processes",
 				"    web: rake",
 			))
