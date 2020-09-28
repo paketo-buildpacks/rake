@@ -5,7 +5,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/paketo-community/rake"
+	"github.com/paketo-buildpacks/rake"
 	"github.com/sclevine/spec"
 
 	. "github.com/onsi/gomega"

@@ -1,4 +1,4 @@
-module github.com/paketo-community/rake
+module github.com/paketo-buildpacks/rake
 
 go 1.14
 
