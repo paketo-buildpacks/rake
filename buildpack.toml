@@ -1,8 +1,9 @@
 api = "0.2"
 
 [buildpack]
-  id = "paketo-community/rake"
+  id = "paketo-buildpacks/rake"
   name = "Paketo Rake Buildpack"
+  homepage = "https://github.com/paketo-buildpacks/rake"
 
 [[stacks]]
   id = "io.buildpacks.stacks.bionic"

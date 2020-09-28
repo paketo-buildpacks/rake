@@ -1,6 +1,6 @@
 # Rake Cloud Native Buildpack
 
-## `gcr.io/paketo-community/rake`
+## `gcr.io/paketo-buildpacks/rake`
 
 The Rake CNB sets a command to run the default Rake task.
 

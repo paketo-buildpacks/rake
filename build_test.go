@@ -9,8 +9,8 @@ import (
 
 	"github.com/paketo-buildpacks/packit"
 	"github.com/paketo-buildpacks/packit/scribe"
-	"github.com/paketo-community/rake"
-	"github.com/paketo-community/rake/fakes"
+	"github.com/paketo-buildpacks/rake"
+	"github.com/paketo-buildpacks/rake/fakes"
 	"github.com/sclevine/spec"
 
 	. "github.com/onsi/gomega"
