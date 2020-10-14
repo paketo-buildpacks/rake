@@ -60,7 +60,7 @@ func testWithoutGemRakeTask(t *testing.T, context spec.G, it spec.S) {
 					settings.Buildpacks.MRI.Online,
 					settings.Buildpacks.Rake.Online,
 				).
-				WithNoPull().
+				WithPullPolicy("never").
 				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred(), logs.String())
 
