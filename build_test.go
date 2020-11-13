@@ -74,10 +74,12 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					Entries: nil,
 				},
 				Layers: nil,
-				Processes: []packit.Process{
-					{
-						Type:    "web",
-						Command: "bundle exec rake",
+				Launch: packit.LaunchMetadata{
+					Processes: []packit.Process{
+						{
+							Type:    "web",
+							Command: "bundle exec rake",
+						},
 					},
 				},
 			}))
@@ -111,10 +113,12 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					Entries: nil,
 				},
 				Layers: nil,
-				Processes: []packit.Process{
-					{
-						Type:    "web",
-						Command: "rake",
+				Launch: packit.LaunchMetadata{
+					Processes: []packit.Process{
+						{
+							Type:    "web",
+							Command: "rake",
+						},
 					},
 				},
 			}))
