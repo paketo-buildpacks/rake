@@ -1,12 +1,12 @@
 api = "0.2"
 
 [buildpack]
+  homepage = "https://github.com/paketo-buildpacks/rake"
   id = "paketo-buildpacks/rake"
   name = "Paketo Rake Buildpack"
-  homepage = "https://github.com/paketo-buildpacks/rake"
 
 [metadata]
-  include-files = ["bin/run", "bin/build","bin/detect","buildpack.toml"]
+  include-files = ["bin/run", "bin/build", "bin/detect", "buildpack.toml"]
   pre-package = "./scripts/build.sh"
 
 [[stacks]]
@@ -14,4 +14,3 @@ api = "0.2"
 
 [[stacks]]
   id = "org.cloudfoundry.stacks.cflinuxfs3"
-
