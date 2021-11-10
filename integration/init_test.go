@@ -1,4 +1,4 @@
-package integration
+package integration_test
 
 import (
 	"encoding/json"
@@ -8,10 +8,11 @@ import (
 	"time"
 
 	"github.com/BurntSushi/toml"
-	. "github.com/onsi/gomega"
 	"github.com/paketo-buildpacks/occam"
 	"github.com/sclevine/spec"
 	"github.com/sclevine/spec/report"
+
+	. "github.com/onsi/gomega"
 )
 
 var settings struct {

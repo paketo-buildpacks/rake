@@ -1,4 +1,4 @@
-package integration
+package integration_test
 
 import (
 	"fmt"
@@ -69,10 +69,10 @@ func testWithGemRakeTask(t *testing.T, context spec.G, it spec.S) {
 			container, err = docker.Container.Run.Execute(image.ID)
 			Expect(err).NotTo(HaveOccurred())
 
-			rLogs := func() fmt.Stringer {
+			rLogs := func() string {
 				rakeLogs, err := docker.Container.Logs.Execute(container.ID)
 				Expect(err).NotTo(HaveOccurred())
-				return rakeLogs
+				return rakeLogs.String()
 			}
 
 			Eventually(rLogs).Should(ContainSubstring("I am a rake task"))
@@ -82,7 +82,6 @@ func testWithGemRakeTask(t *testing.T, context spec.G, it spec.S) {
 				"  Assigning launch processes",
 				"    web: bundle exec rake",
 			))
-
 		})
 	})
 }

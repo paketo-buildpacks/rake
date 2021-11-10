@@ -2,7 +2,6 @@ package rake_test
 
 import (
 	"errors"
-	"io/ioutil"
 	"os"
 	"path/filepath"
 	"testing"
@@ -26,7 +25,7 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 
 	it.Before(func() {
 		var err error
-		workingDir, err = ioutil.TempDir("", "working-dir")
+		workingDir, err = os.MkdirTemp("", "working-dir")
 		Expect(err).NotTo(HaveOccurred())
 
 		gemfileParser = &fakes.Parser{}
@@ -45,7 +44,7 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 
 		context("when there is a Rakefile", func() {
 			it.Before(func() {
-				err := ioutil.WriteFile(filepath.Join(workingDir, "Rakefile"), []byte{}, 0644)
+				err := os.WriteFile(filepath.Join(workingDir, "Rakefile"), nil, 0600)
 				Expect(err).NotTo(HaveOccurred())
 			})
 
@@ -82,7 +81,7 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 
 		context("when there is a rakefile", func() {
 			it.Before(func() {
-				err := ioutil.WriteFile(filepath.Join(workingDir, "rakefile"), []byte{}, 0644)
+				err := os.WriteFile(filepath.Join(workingDir, "rakefile"), nil, 0600)
 				Expect(err).NotTo(HaveOccurred())
 			})
 
@@ -119,7 +118,7 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 
 		context("when there is a rakefile.rb", func() {
 			it.Before(func() {
-				err := ioutil.WriteFile(filepath.Join(workingDir, "rakefile.rb"), []byte{}, 0644)
+				err := os.WriteFile(filepath.Join(workingDir, "rakefile.rb"), nil, 0600)
 				Expect(err).NotTo(HaveOccurred())
 			})
 
@@ -156,7 +155,7 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 
 		context("when there is a Rakefile.rb", func() {
 			it.Before(func() {
-				err := ioutil.WriteFile(filepath.Join(workingDir, "Rakefile.rb"), []byte{}, 0644)
+				err := os.WriteFile(filepath.Join(workingDir, "Rakefile.rb"), nil, 0600)
 				Expect(err).NotTo(HaveOccurred())
 			})
 
@@ -196,7 +195,7 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 		it.Before(func() {
 			gemfileParser.ParseCall.Returns.HasRakeGem = false
 
-			err := ioutil.WriteFile(filepath.Join(workingDir, "Rakefile"), []byte{}, 0644)
+			err := os.WriteFile(filepath.Join(workingDir, "Rakefile"), nil, 0600)
 			Expect(err).NotTo(HaveOccurred())
 		})
 
@@ -250,7 +249,7 @@ func testDetect(t *testing.T, context spec.G, it spec.S) {
 			it.Before(func() {
 				gemfileParser.ParseCall.Returns.Err = errors.New("some-error")
 
-				err := ioutil.WriteFile(filepath.Join(workingDir, "Rakefile"), []byte{}, 0644)
+				err := os.WriteFile(filepath.Join(workingDir, "Rakefile"), nil, 0600)
 				Expect(err).NotTo(HaveOccurred())
 			})
 
