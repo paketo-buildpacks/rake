@@ -6,8 +6,8 @@ import (
 	"os"
 	"testing"
 
-	"github.com/paketo-buildpacks/packit"
-	"github.com/paketo-buildpacks/packit/scribe"
+	"github.com/paketo-buildpacks/packit/v2"
+	"github.com/paketo-buildpacks/packit/v2/scribe"
 	"github.com/paketo-buildpacks/rake"
 	"github.com/paketo-buildpacks/rake/fakes"
 	"github.com/sclevine/spec"
@@ -39,7 +39,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 		Expect(err).NotTo(HaveOccurred())
 
 		buffer = bytes.NewBuffer(nil)
-		logger := scribe.NewLogger(buffer)
+		logger := scribe.NewEmitter(buffer)
 		gemfileParser = &fakes.Parser{}
 		build = rake.Build(gemfileParser, logger)
 	})
@@ -77,16 +77,18 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 					Processes: []packit.Process{
 						{
 							Type:    "web",
-							Command: "bundle exec rake",
+							Command: "bundle",
+							Args:    []string{"exec rake"},
 							Default: true,
+							Direct:  true,
 						},
 					},
 				},
 			}))
 
 			Expect(buffer.String()).To(ContainSubstring("Some Buildpack some-version"))
-			Expect(buffer.String()).To(ContainSubstring("Assigning launch processes"))
-			Expect(buffer.String()).To(ContainSubstring("bundle exec rake"))
+			Expect(buffer.String()).To(ContainSubstring("Assigning launch processes:"))
+			Expect(buffer.String()).To(ContainSubstring("web (default): bundle exec rake"))
 		})
 	})
 
@@ -118,15 +120,17 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 						{
 							Type:    "web",
 							Command: "rake",
+							Args:    []string{},
 							Default: true,
+							Direct:  true,
 						},
 					},
 				},
 			}))
 
 			Expect(buffer.String()).To(ContainSubstring("Some Buildpack some-version"))
-			Expect(buffer.String()).To(ContainSubstring("Assigning launch processes"))
-			Expect(buffer.String()).To(ContainSubstring("rake"))
+			Expect(buffer.String()).To(ContainSubstring("Assigning launch processes:"))
+			Expect(buffer.String()).To(ContainSubstring("web (default): rake"))
 		})
 	})
 
