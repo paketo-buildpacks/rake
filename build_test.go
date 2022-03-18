@@ -120,7 +120,7 @@ func testBuild(t *testing.T, context spec.G, it spec.S) {
 						{
 							Type:    "web",
 							Command: "rake",
-							Args:    []string{},
+							Args:    nil,
 							Default: true,
 							Direct:  true,
 						},
