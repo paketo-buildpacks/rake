@@ -24,8 +24,7 @@ func Build(gemfileParser Parser, logger scribe.Emitter) packit.BuildFunc {
 		}
 
 		command := "rake"
-
-		args := []string{}
+		var args []string
 		if hasRakeGem {
 			logger.Debug.Subprocess("Gemfile contains rake gem")
 			command = "bundle"
@@ -42,6 +41,7 @@ func Build(gemfileParser Parser, logger scribe.Emitter) packit.BuildFunc {
 				Direct:  true,
 			},
 		}
+
 		logger.LaunchProcesses(processes)
 
 		return packit.BuildResult{
