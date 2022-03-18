@@ -77,8 +77,8 @@ func testWithoutGemRakeTask(t *testing.T, context spec.G, it spec.S) {
 
 			Expect(logs).To(ContainLines(
 				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, settings.Buildpack.Name)),
-				"  Assigning launch processes",
-				"    web: rake",
+				"  Assigning launch processes:",
+				`    web (default): rake `,
 			))
 		})
 	})

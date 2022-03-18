@@ -62,6 +62,7 @@ func testWithGemRakeTask(t *testing.T, context spec.G, it spec.S) {
 					settings.Buildpacks.BundleInstall.Online,
 					settings.Buildpacks.Rake.Online,
 				).
+				WithEnv(map[string]string{"BP_LOG_LEVEL": "DEBUG"}).
 				WithPullPolicy("never").
 				Execute(name, source)
 			Expect(err).NotTo(HaveOccurred(), logs.String())
@@ -79,8 +80,11 @@ func testWithGemRakeTask(t *testing.T, context spec.G, it spec.S) {
 
 			Expect(logs).To(ContainLines(
 				MatchRegexp(fmt.Sprintf(`%s \d+\.\d+\.\d+`, settings.Buildpack.Name)),
-				"  Assigning launch processes",
-				"    web: bundle exec rake",
+				"  Checking Gemfile for rake",
+				"    Gemfile contains rake gem",
+				"",
+				"  Assigning launch processes:",
+				`    web (default): bundle exec rake`,
 			))
 		})
 	})
