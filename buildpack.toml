@@ -5,7 +5,7 @@ api = "0.7"
   homepage = "https://github.com/paketo-buildpacks/rake"
   id = "paketo-buildpacks/rake"
   keywords = ["ruby", "rake"]
-  name = "Paketo Rake Buildpack"
+  name = "Paketo Buildpack for Rake"
 
   [[buildpack.licenses]]
     type = "Apache-2.0"
