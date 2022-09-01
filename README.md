@@ -1,4 +1,4 @@
-# Rake Cloud Native Buildpack
+# Paketo Buildpack for Rake
 
 ## `gcr.io/paketo-buildpacks/rake`
 
