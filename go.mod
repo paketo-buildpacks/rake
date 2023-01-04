@@ -16,8 +16,14 @@ require (
 	github.com/sclevine/spec v1.4.0
 	github.com/testcontainers/testcontainers-go v0.17.0 // indirect
 	github.com/ulikunitz/xz v0.5.11 // indirect
+	golang.org/x/sys v0.4.0 // indirect
+	golang.org/x/text v0.6.0 // indirect
 	google.golang.org/genproto v0.0.0-20221227171554-f9683d7f8bef // indirect
 	gotest.tools/v3 v3.4.0 // indirect
 )
 
-replace github.com/CycloneDX/cyclonedx-go => github.com/CycloneDX/cyclonedx-go v0.6.0
+replace (
+	github.com/CycloneDX/cyclonedx-go => github.com/CycloneDX/cyclonedx-go v0.6.0
+	// Per https://golang.testcontainers.org/quickstart/#2-install-testcontainers-for-go, this is needed until Docker 22.06 is out
+	github.com/docker/docker => github.com/docker/docker v20.10.3-0.20221013203545-33ab36d6b304+incompatible // 22.06 branch
+)
