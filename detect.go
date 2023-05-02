@@ -2,10 +2,10 @@ package rake
 
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 
 	"github.com/paketo-buildpacks/packit/v2"
+	"github.com/paketo-buildpacks/packit/v2/fs"
 )
 
 type BuildPlanMetadata struct {
@@ -17,20 +17,19 @@ func Detect(gemfileParser Parser) packit.DetectFunc {
 		rakefiles := []string{"Rakefile", "Rakefile.rb", "rakefile", "rakefile.rb"}
 		rakeFileExists := false
 		for _, file := range rakefiles {
-			_, err := os.Stat(filepath.Join(context.WorkingDir, file))
+			exists, err := fs.Exists(filepath.Join(context.WorkingDir, file))
 			if err != nil {
-				if os.IsNotExist(err) {
-					continue
-				}
 				return packit.DetectResult{}, fmt.Errorf("failed to stat %s: %w", file, err)
-			} else {
+			}
+
+			if exists {
 				rakeFileExists = true
 				break
 			}
 		}
 
 		if !rakeFileExists {
-			return packit.DetectResult{}, packit.Fail
+			return packit.DetectResult{}, packit.Fail.WithMessage("no 'Rakefile', 'Rakefile.rb', 'rakefile', or 'rakefile.rb' file found")
 		}
 
 		hasRakeGem, err := gemfileParser.Parse(filepath.Join(context.WorkingDir, "Gemfile"))
